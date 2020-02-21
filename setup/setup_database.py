@@ -1,5 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
+from __future__ import print_function
+from builtins import input
+from builtins import range
 import sqlite3, os, string, hashlib, random
 
 
@@ -20,12 +23,12 @@ punctuation = '!#%&()*+,-./:;<=>?@[]^_{|}~'
 
 # otherwise prompt the user for a set value to hash for the negotiation password
 if STAGING_KEY == "BLANK":
-    choice = raw_input("\n [>] Enter server negotiation password, enter for random generation: ")
+    choice = input("\n [>] Enter server negotiation password, enter for random generation: ")
     if choice == "":
         # if no password is entered, generation something random
         STAGING_KEY = ''.join(random.sample(string.ascii_letters + string.digits + punctuation, 32))
     else:
-        STAGING_KEY = hashlib.md5(choice).hexdigest()
+        STAGING_KEY = hashlib.md5(choice.encode('utf-8')).hexdigest()
 elif STAGING_KEY == "RANDOM":
     STAGING_KEY = ''.join(random.sample(string.ascii_letters + string.digits + punctuation, 32))
 
@@ -175,4 +178,4 @@ c.execute('''CREATE TABLE "reporting" (
 conn.commit()
 conn.close()
 
-print "\n [*] Database setup completed!\n"
+print("\n [*] Database setup completed!\n")

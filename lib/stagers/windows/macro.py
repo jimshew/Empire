@@ -1,7 +1,11 @@
+from __future__ import print_function
+from builtins import str
+from builtins import range
+from builtins import object
 from lib.common import helpers
 import random, string
 
-class Stager:
+class Stager(object):
 
     def __init__(self, mainMenu, params=[]):
 
@@ -153,11 +157,11 @@ class Stager:
 
         # generate the launcher code
         launcher = self.mainMenu.stagers.generate_launcher(listenerName, language=language, encode=encode, obfuscate=invokeObfuscation, obfuscationCommand=obfuscateCommand, userAgent=userAgent, proxy=proxy, proxyCreds=proxyCreds, stagerRetries=stagerRetries, safeChecks=safeChecks, scriptLogBypass=scriptLogBypassBool, AMSIBypass=AMSIBypassBool, AMSIBypass2=AMSIBypass2Bool)
-        Str = ''.join(random.choice(string.letters) for i in range(random.randint(1,len(listenerName))))
-        Method=''.join(random.choice(string.letters) for i in range(random.randint(1,len(listenerName))))
+        Str = ''.join(random.choice(string.ascii_letters) for i in range(random.randint(1,len(listenerName))))
+        Method=''.join(random.choice(string.ascii_letters) for i in range(random.randint(1,len(listenerName))))
 
         if launcher == "":
-            print helpers.color("[!] Error in launcher command generation.")
+            print(helpers.color("[!] Error in launcher command generation."))
             return ""
         else:
             chunks = list(helpers.chunks(launcher, 50))

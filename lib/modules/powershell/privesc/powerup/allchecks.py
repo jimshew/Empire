@@ -1,6 +1,9 @@
+from __future__ import print_function
+from builtins import str
+from builtins import object
 from lib.common import helpers
 
-class Module:
+class Module(object):
 
     def __init__(self, mainMenu, params=[]):
 
@@ -53,7 +56,6 @@ class Module:
     def generate(self, obfuscate=False, obfuscationCommand=""):
 
         moduleName = self.info["Name"]
-        
         # read in the common powerup.ps1 module source code
         moduleSource = self.mainMenu.installPath + "/data/module_source/privesc/PowerUp.ps1"
         if obfuscate:
@@ -62,19 +64,17 @@ class Module:
         try:
             f = open(moduleSource, 'r')
         except:
-            print helpers.color("[!] Could not read module source path at: " + str(moduleSource))
+            print(helpers.color("[!] Could not read module source path at: " + str(moduleSource)))
             return ""
 
         moduleCode = f.read()
         f.close()
-
         # # get just the code needed for the specified function
         # script = helpers.generate_dynamic_powershell_script(moduleCode, moduleName)
         script = moduleCode
 
         scriptEnd = ';' + moduleName + " "
-
-        for option,values in self.options.iteritems():
+        for option,values in self.options.items():
             if option.lower() != "agent":
                 if values['Value'] and values['Value'] != '':
                     if values['Value'].lower() == "true":
